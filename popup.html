@@ -1,110 +1,153 @@
 <html lang="en">
-    <head>
-        <title>SnapSummary</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                min-width: 500px;
-                min-height: 300px;
-                padding: 15px;
-            }
-            
-            h2 {
-                color: #333;
-                margin-bottom: 15px;
-            }
+  <head>
+    <title>SnapSummary</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-width: 500px;
+        min-height: 300px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        color: #333;
+        line-height: 1.6;
+      }
 
-            .options {
-                display: flex;
-                gap: 10px;
-                margin-bottom: 15px;
-            }
+      .header {
+        text-align: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+      }
 
-            button {
-                padding: 8px 15px;
-                background-color: #4285f4;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-weight: bold;
-            }
+      h2 {
+        background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
 
-            button:hover {
-                background-color: #3367d6;
-            }
+      .tagline {
+        color: #666;
+        font-size: 0.9rem;
+        font-style: italic;
+      }
 
-            #copy-btn {
-                background-color: #34a853
-            }
+      .options {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+        align-items: center;
+      }
 
-            #copy-btn:hover {
-                background-color: #2e8b57;
-            }
+      button {
+        padding: 10px 18px;
+        background: linear-gradient(to right, #4285f4, #34a0ff);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-            #summary-type {
-                padding: 8px;
-                border-radius: 4px;
-                border: 1px solid #ddd;
-            }
+      button:hover {
+        background: linear-gradient(to right, #3367d6, #2980b9);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
 
-            #result {
-                margin-top: 15px;
-                padding: 15px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                min-height: 150px;
-                max-height: 400px;
-                overflow-y: auto;
-                white-space: pre-wrap;
-                line-height: 1.5;
-            }
+      #copy-btn {
+        background: linear-gradient(to right, #34a853, #2ecc71);
+      }
 
-            #result li {
-                margin-bottom: 10px;
-            }
+      #copy-btn:hover {
+        background: linear-gradient(to right, #2e8b57, #27ae60);
+      }
 
-            .loading {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 150px;
-            }
+      #summary-type {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        background-color: white;
+        flex-grow: 1;
+        font-size: 0.95rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        transition: border-color 0.3s;
+      }
 
-            .loader {
-                border: 4px solid #f3f3f3;
-                border-top: 4px solid #3498db;
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                animation: spin 1s linear infinite;
-            }
+      #summary-type:focus {
+        outline: none;
+        border-color: #4285f4;
+        box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+      }
 
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <h2>SnapSummary</h2>
+      #result {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        min-height: 150px;
+        max-height: 400px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        line-height: 1.6;
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      #result li {
+        margin-bottom: 12px;
+      }
+
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+      }
+
+      .loader {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #4285f4;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h2>SnapSummary</h2>
+      <div class="tagline">Get instant summaries of any webpage</div>
+    </div>
 
     <div class="options">
-        <select id="summary-type">
-            <option value=""brief">Brief</option>
-            <option value="detailed">Detailed</option>
-            <option value=""bullets">Bullet Points</option>
-        </select>
-        
-        <button id="summarize">Summarize</button>
-        <button id="copy-btn">Copy</button>
+      <select id="summary-type">
+        <option value="brief">Brief</option>
+        <option value="detailed">Detailed</option>
+        <option value="bullets">Bullet Points</option>
+      </select>
+
+      <button id="summarize">Summarize</button>
+      <button id="copy-btn">Copy</button>
     </div>
-        
-    <div id="result">Select a type and click Summarize...</b>
+
+    <div id="result">Select a type and click Summarize...</div>
 
     <script src="popup.js"></script>
   </body>
